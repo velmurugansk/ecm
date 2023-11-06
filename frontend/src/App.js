@@ -1,11 +1,15 @@
 import './App.css';
+import Header from './components/Header';
+import Content from './components/Content';
+import Footer from './components/Footer';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Welcome!!!</h1>
-      <p>Ecommerce Application Upcoming Here!</p>
-    </div>
+    <>
+      <Header />
+      <Content />
+      <Footer />
+    </>
   );
 }
 
