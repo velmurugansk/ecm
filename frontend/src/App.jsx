@@ -1,11 +1,13 @@
 import './App.css'
-import Header from './components/Header'
-
+import {Routes, Route} from "react-router-dom"
+import Layout from './components/Layout';
+import Loginreg from './components/Loginreg';
 function App() {
   return (
-    <div className='w-full'>
-      <Header/>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout/>}></Route>
+      <Route path="/login" element={<Loginreg/>}></Route>
+    </Routes>
   )
 }
 
