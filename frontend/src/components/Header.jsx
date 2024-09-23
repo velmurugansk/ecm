@@ -9,7 +9,7 @@ function Header() {
     <div className='flex w-full h-16 px-4 md:px-14 justify-between items-center py-3 shadow-lg flex-1'>
       <div className='logo-div flex items-center'>
         <Mobilenav className="md:hidden" />
-        <img src={logo} className='h-12 w-23' alt="logo" />
+        <Link to="/"><img src={logo} className='h-12 w-23' alt="logo" /></Link>
       </div>
       <div className='hidden md:block'>
         <input type="search" className='rounded-full w-80 border outline-none hover:border-[#2257bf] py-2 px-3 ml-2 h-9' placeholder='Search here...' />

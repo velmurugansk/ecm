@@ -4,11 +4,12 @@ function Loginreg() {
   const [islogin, setIslogin] = useState(true);
   const [userdata, setUserdata] = useState({name:'', email:'', password:'', confirmpassword:''});
   const [logindata, setLogindata] = useState({username:'', password:''});
-  const [err, setErr] = useState('');
+  const [err, setErr] = useState({});
+  const [error, setError] = useState({})
 
   const setValues = (e) => {
     e.preventDefault()
-    const { name, value } = event.target;
+    const { name, value } = e.target;
     setUserdata((prevFormData) => ({ ...prevFormData, [name]: value })); 
   }
 
@@ -19,13 +20,26 @@ function Loginreg() {
 
   const changeValues = (e) => {
     e.preventDefault();
-    const { name, value } = event.target;
+    const { name, value } = e.target;
     setLogindata((prevFormData) => ({ ...prevFormData, [name]: value }));
   }
 
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log('hai', logindata)
+    const errors = validateLogindetail(logindata);
+    setError(errors);
+    console.log('hai', logindata, errors)
+  }
+
+  const validateLogindetail = (data) => { 
+    const error = {};
+    if(!data.username.trim()){
+      error.username = 'Username is required!'
+    }
+
+    if(!data.password.trim()){
+      error.password = 'Password is required!'
+    }
   }
 
   return (
@@ -57,11 +71,11 @@ function Loginreg() {
           <form onSubmit={handleLogin}>
             <div className='my-3'>
               <input type="text" className='w-full outline-0 border-b-2 px-3 py-2' name="username" onChange={changeValues} placeholder='Username' />
-              <span className='text-red username-err'></span>
+              {error.username && <span className='text-red'>{error.username}</span>}
             </div>
             <div className='my-3'>
               <input type="password" className='w-full outline-0 border-b-2 px-3 py-2' name="password" onChange={changeValues} placeholder='Password' />
-              <span className='text-red password-err'></span>
+              {error.password && <span className='text-red'>{error.password}</span>}
             </div>
             <button type='submit' className='w-full rounded-full bg-[#2257bf] text-white py-2 mt-4'>Login</button>
           </form>
