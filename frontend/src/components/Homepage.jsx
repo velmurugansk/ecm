@@ -1,9 +1,13 @@
 import React from 'react'
-import Productcarousel from './Productcarousel'
+import Productcarousel from './homepage/Productcarousel'
+import Category from './homepage/Category'
 
 function Homepage() {
   return (
-    <div className='px-4 py-2'><Productcarousel/></div>
+    <div>
+      <Productcarousel/>
+      <Category />
+    </div>
   )
 }
 
