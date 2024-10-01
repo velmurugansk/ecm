@@ -14,7 +14,7 @@ function Category() {
         <h4 className='text-2xl font-bold text-[#2257bf]'>Categories</h4>     
         <div className='grid grid-cols-5 gap-3'>
             {productcatgory.map(item => {
-                return (<div className='p-2 cursor-pointer'>
+                return (<div key={item} className='p-2 cursor-pointer'>
                     <img src={item.imgname} className='h-20 w-20 mx-auto' alt="categoryimg" />
                     <p className='my-2 font-bold text-center'>{item.name}</p></div>);
             })}
