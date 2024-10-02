@@ -1,7 +1,8 @@
 import React from 'react'
+import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
+import "./productcaro.css"
 import heroimg1 from '../../assets/heroimg1.jpg';
 import heroimg3 from '../../assets/heroimg3.jpg';
 import heroimg4 from '../../assets/heroimg4.jpg';
@@ -19,10 +20,10 @@ function Productcarousel() {
         cssEase: "linear",
         arrows : false,
         lazyLoad: true
-      };
+    };
 
   return (
-    <div className="slider-container px-0 lg:px-10 xl:px-20">
+    <div className="slider-container bg-[#fff]">
       <Slider {...settings}>
         <div>
         <img src={heroimg1}  alt="heroimg" />

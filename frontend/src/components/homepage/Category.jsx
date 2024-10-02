@@ -10,7 +10,7 @@ function Category() {
   const productcatgory = [{name : 'Laptops', imgname:laptop}, {name : 'Mobile', imgname:mobile}, {name : 'Smart Watch', imgname:smartwatch}, {name : 'Headphone', imgname:headphone}, {name : 'Book', imgname:book}]
     
   return (
-    <div className='my-7 bg-[#fff] px-0 lg:px-10 xl:px-20'>
+    <div className='my-7 bg-[#fff] p-2'>
         <h4 className='text-2xl font-bold text-[#2257bf]'>Categories</h4>     
         <div className='grid grid-cols-5 gap-3'>
             {productcatgory.map(item => {

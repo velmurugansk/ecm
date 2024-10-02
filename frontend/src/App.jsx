@@ -9,10 +9,12 @@ function App() {
   return (
     <Router>
       <Header/>
+      <div className='px-0 lg:px-10 xl:px-20'>
     <Routes>
       <Route path="/" element={<Homepage/>}></Route>
-      <Route path="/login" element={<Loginreg/>}></Route>
+      <Route path="/login" element={<Loginreg/>}></Route>         
     </Routes>
+    </div>   
     </Router>
   )
 }
