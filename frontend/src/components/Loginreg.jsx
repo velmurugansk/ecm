@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Button } from './ui/button';
 
 function Loginreg() {
   const [islogin, setIslogin] = useState(true);
@@ -98,7 +99,7 @@ function Loginreg() {
             <input type="password" placeholder='Confirm Password' name='confirmpassword' value={userdata.confirmpassword} onChange={setValues} className='w-full outline-0 border-b-2 px-3 py-2'/>
             {err.confirmpassword && <span className='text-red-400 text-sm'>{err.confirmpassword}</span>}
           </div>
-          <button type='submit' className='w-full rounded-full bg-[#2257bf] text-white py-2 mt-4'>Sign up</button>
+          <Button type='submit' className='w-full rounded-full bg-[#2257bf] text-white hover:bg-[#3867C5] py-2 mt-4'>Sign up</Button>          
           </form>
           <p className='my-4'>Already have an account? <span className='text-base font-bold text-[#0066c0] cursor-pointer' onClick={()=>setIslogin(!islogin)}>Login</span></p>
         </div>) : (<div className='px-2 py-3'>
@@ -111,7 +112,7 @@ function Loginreg() {
               <input type="password" className='w-full outline-0 border-b-2 px-3 py-2' name="password" onChange={changeValues} placeholder='Password' />
               {error.password && <span className='text-red-400 text-sm'>{error.password}</span>}
             </div>
-            <button type='submit' className='w-full rounded-full bg-[#2257bf] text-white py-2 mt-4'>Login</button>
+            <Button type='submit' className='w-full rounded-full bg-[#2257bf] text-white hover:bg-[#3867C5] py-2 mt-4'>Login</Button>            
           </form>
           <p className='my-4'>Create your amazon account? <span className='text-base font-bold text-[#0066c0] cursor-pointer' onClick={()=>setIslogin(!islogin)}>Sign up</span></p>
         </div>)}                       

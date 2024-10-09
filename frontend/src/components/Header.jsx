@@ -3,6 +3,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import logo from "../assets/amazonlogo.svg"
 import Mobilenav from "./Mobilenav"
 import { Link } from 'react-router-dom';
+import { Button } from './ui/button';
 
 function Header() {
   return (
@@ -17,7 +18,7 @@ function Header() {
       <div className="user-div">
         <div className="flex items-center">
           <MdOutlineShoppingCart className='text-2xl d-block cursor-pointer text-[#2257bf]' />
-          <Link to="/login"><button className='ml-2 bg-[#2257bf] py-2 px-3 text-white rounded-lg hidden md:block'>Login / Sign up</button></Link>
+          <Link to="/login"><Button className='ml-2 bg-[#2257bf] py-2 px-3 text-white rounded-lg hidden md:block hover:bg-[#3867C5]'>Login / Sign up</Button></Link>
         </div>
       </div>
     </div>
