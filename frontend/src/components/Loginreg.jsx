@@ -1,9 +1,15 @@
 import React, {useState} from 'react'
 import { Button } from './ui/button';
+import Commonform from './common/Commonform';
+import { registerFormcontrols } from '@/config';
+
+const userregisterData = {
+  username:'', email:'', password:''
+}
 
 function Loginreg() {
   const [islogin, setIslogin] = useState(true);
-  const [userdata, setUserdata] = useState({username:'', email:'', password:'', confirmpassword:''});
+  const [userdata, setUserdata] = useState(userregisterData);
   const [logindata, setLogindata] = useState({username:'', password:''});
   const [err, setErr] = useState({});
   const [error, setError] = useState({});
@@ -82,25 +88,7 @@ function Loginreg() {
       <div className='lg:w-1/3 sm:w-4/5 border px-3 py-6 rounded-lg'>
         <h2 className='text-center text-2xl font-bold'>{islogin ? 'Login' : 'Create Account'}</h2>
         {!islogin ? (<div className='px-2 py-3'>
-          <form onSubmit={handleSubmit}>
-          <div className='my-2'>
-            <input type="text" placeholder='Username' name='username' value={userdata.username} onChange={setValues} className='w-full outline-0 border-b-2 px-3 py-2'/>
-            {err.username && <span className='text-red-400 text-sm'>{err.username}</span>}
-          </div>
-          <div className="my-2">
-            <input type="email" placeholder='E-mail' name='email' value={userdata.email} onChange={setValues} className='w-full outline-0 border-b-2 px-3 py-2'/>  
-            {err.email && <span className='text-red-400 text-sm'>{err.email}</span>}
-          </div>
-          <div className="my-2">
-            <input type="password" placeholder='Password' name='password' value={userdata.password} onChange={setValues} className='w-full outline-0 border-b-2 px-3 py-2'/>
-            {err.password && <span className='text-red-400 text-sm'>{err.password}</span>}
-          </div>
-          <div className='my-2'>
-            <input type="password" placeholder='Confirm Password' name='confirmpassword' value={userdata.confirmpassword} onChange={setValues} className='w-full outline-0 border-b-2 px-3 py-2'/>
-            {err.confirmpassword && <span className='text-red-400 text-sm'>{err.confirmpassword}</span>}
-          </div>
-          <Button type='submit' className='w-full rounded-full bg-[#2257bf] text-white hover:bg-[#3867C5] py-2 mt-4'>Sign up</Button>          
-          </form>
+          <Commonform formcontrols={registerFormcontrols} formData={userdata} setFormdata={setUserdata} onSubmit={handleSubmit} buttontext="Sign up" />
           <p className='my-4'>Already have an account? <span className='text-base font-bold text-[#0066c0] cursor-pointer' onClick={()=>setIslogin(!islogin)}>Login</span></p>
         </div>) : (<div className='px-2 py-3'>
           <form onSubmit={handleLogin}>
