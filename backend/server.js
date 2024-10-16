@@ -5,6 +5,7 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000; 
 const dotenv = require("dotenv");
+const authRouter = require('./routes/auth/authRouter')
 
 dotenv.config();
 
@@ -26,7 +27,8 @@ app.use(cors({
 }))
 
 app.use(cookieParser());
-app.use(express.json())
+app.use(express.json());
+app.use('/api/auth', authRouter);
 
 app.get('/hello', (req, res) => {
  res.send('Hello, World!');
