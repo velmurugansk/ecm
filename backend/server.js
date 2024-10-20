@@ -7,6 +7,7 @@ const port = process.env.PORT || 5000;
 const dotenv = require("dotenv");
 const authRouter = require('./routes/auth/authRouter')
 
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGOURL).then(
@@ -14,7 +15,7 @@ mongoose.connect(process.env.MONGOURL).then(
 ).catch((error) => console.log(error))
 
 app.use(cors({
-    origin : 'http://localhost:5173/',
+    origin : 'http://localhost:5173',
     methods : ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders : [
         "Content-type",

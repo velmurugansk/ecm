@@ -3,31 +3,40 @@ const token = require('jsonwebtoken');
 const User = require('../../models/User');
 
 // register
-const registerUser = async (req, res) => {
-    const {username, email, password } = req.body;
+const registerUser = async(req, res) => {    
     try{
-        const hashpassword = bcrypt.hashpassword(password, email);
+        console.log('hai')
+        const {username, email, password } = req.body;
+        const hashpassword =await bcrypt.hash(password, 10);
+        
         const newUser = new User({
-            username,email,
-            password:hashpassword
+            username,
+            password:hashpassword,
+            email
         })
-
-        let crtuster = await newUser.save();
+        
+        const crtuster = await newUser.save();
         if(crtuster) {
             res.status(200).json({status:true,message:'Registration Successful'});
         }
-    }
-    catch(e){
+    } catch(e){
         res.status(200).json({status:false,message:'Something error occured!'});
     }
 }
 
 
 // Login
-const login = async (req, res) => {
-    const {email, password } = req.body;
+const login = async (req, res) => {    
     try{
-
+        const {email, password } = req.body;
+        const getuser = await User.findOne({email: email});
+        if(getuser) {
+            const isMatch = await bcrypt.compare(password, hashedPassword);
+            isMatch ? res.status(200).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
+        } else {
+            res.status(200).json({status:false,message:"User doesn't exit!"})
+        }
+        
     }
     catch(e){
         res.status(200).json({status:false,message:'Something error occured!'});

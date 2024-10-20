@@ -43,13 +43,14 @@ function Commonform({formcontrols, formData, setFormdata, onSubmit, buttontext})
     <form onSubmit={onSubmit}>
         <div className='flex flex-col gap-3'>
           {
-            formcontrols.map(item => <div className='grid w-full gap-1.5' key={item.name}>
+            formcontrols.map(item => {
+              return <div className='grid w-full gap-1.5' key={item.name}>
               <Label className='mb-1'>{item.label}</Label>
               {
                 renderInputelement(item)
               }
               </div>              
-            )
+            })
           }
         </div>
         <Button type='submit' className='w-full rounded-full bg-[#2257bf] text-white hover:bg-[#3867C5] py-2 mt-4'>{buttontext ? buttontext : 'Submit'}</Button>

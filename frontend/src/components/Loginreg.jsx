@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { Button } from './ui/button';
 import Commonform from './common/Commonform';
 import { registerFormcontrols, loginFormcontrols } from '@/config';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../features/auth/authSlice'
 
 const userregisterData = {
   username:'', email:'', password:''
@@ -18,6 +20,7 @@ function Loginreg() {
   const [err, setErr] = useState({});
   const [error, setError] = useState({});
   const pwdregx = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
+  const dispatch = useDispatch()
 
   const setValues = (e) => {
     e.preventDefault()
@@ -29,11 +32,14 @@ function Loginreg() {
     e.preventDefault();
     const errors = validateSignupdata(userdata);
     setErr(errors)
+    
+    dispatch(registerUser(userdata))
     console.log('hai', userdata)
   }
 
   const validateSignupdata = (data) => {
     const error={};
+    
     if(!data.username.trim()){
       error.username = 'Username is required!'
     }
@@ -46,14 +52,6 @@ function Loginreg() {
       error.password = 'Password is required!'
     }  else if(!pwdregx.test(data.password.trim())) {
       error.password = 'Password is can include one alphanumeric, one lowercase, one uppercase, one special character. password must minimum 9 characters!'
-    }
-
-    if(!data.confirmpassword.trim()){
-      error.confirmpassword = 'Confirm password is required!'
-    } else if(!pwdregx.test(data.confirmpassword.trim())) {
-      error.confirmpassword = 'Confirm Password is can include one alphanumeric, one lowercase, one uppercase, one special character. password must minimum 9 characters!'
-    } else if(data.password.trim() != data.confirmpassword.trim()) {
-      error.confirmpassword = 'Password and Confirm password does not match!'
     }
 
     return error;
