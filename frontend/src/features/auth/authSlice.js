@@ -11,11 +11,20 @@ const initialvalue = {
 }
 
 export const registerUser = createAsyncThunk ('/auth/register',
-    async (formdata) => {
-        console.log(formdata)
+    async (formdata) => {        
         const response = await axios.post('http://localhost:5000/api/auth/register', formdata,{
             withCredentials:true,
         });
+        return response.data
+    }
+)
+
+export const loginUser = createAsyncThunk ('/auth/login',
+    async (formdata) => {        
+        const response = await axios.post('http://localhost:5000/api/auth/login', formdata,{
+            withCredentials:true,
+        });
+        
         return response.data
     }
 )
@@ -40,8 +49,21 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.user = null
         })
+        builder.addCase(loginUser.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(loginUser.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload
+        })
+        .addCase(loginUser.rejected, (state) => {
+            state.isLoading = false;
+            state.isAuthenticated = false;
+            state.user = null
+        })
     }
 })
 
-// export const {setUser} = authSlice.actions;
+export const {actions: userActions} = authSlice.actions;
 export default authSlice.reducer;

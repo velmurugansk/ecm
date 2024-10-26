@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { Button } from './ui/button';
 import Commonform from './common/Commonform';
 import { registerFormcontrols, loginFormcontrols } from '@/config';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../features/auth/authSlice'
+import { registerUser, loginUser } from '../features/auth/authSlice'
+import { useToast } from '@/hooks/use-toast';
 
 const userregisterData = {
   username:'', email:'', password:''
@@ -14,6 +14,7 @@ const userloginData = {
 }
 
 function Loginreg() {
+  const { toast } = useToast()
   const [islogin, setIslogin] = useState(true);
   const [userdata, setUserdata] = useState(userregisterData);
   const [logindata, setLogindata] = useState(userloginData);
@@ -33,7 +34,7 @@ function Loginreg() {
     const errors = validateSignupdata(userdata);
     setErr(errors)
     
-    dispatch(registerUser(userdata))
+    const response = dispatch(registerUser(userdata));
     console.log('hai', userdata)
   }
 
@@ -66,20 +67,29 @@ function Loginreg() {
   const handleLogin = (e) => {
     e.preventDefault();
     const errors = validateLogindetail(logindata);
-    setError(errors);
-    console.log('hai', logindata, errors)
+    
+    if(Object.keys(errors).length === 0) {
+      const response = dispatch(loginUser(logindata));
+      console.log(response)
+    } else {
+      toast({
+      variant: "destructive",
+      title: "Alert",
+      description: errors.key,      
+      })
+    }
+    
   }
 
   const validateLogindetail = (data) => { 
     const error = {};
-    if(!data.username.trim()){
-      error.username = 'Username is required!'
-    }
-
-    if(!data.password.trim()){
-      error.password = 'Password is required!'
+    
+    if(!data.email.trim()){
+      error.key = 'Email is required!'
+    } else if(!data.password.trim()){
+      error.key = 'Password is required!'
     } else if(!pwdregx.test(data.password.trim())) {
-      error.password = 'Password is can include one alphanumeric, one lowercase, one uppercase, one special character. password must minimum 9 characters!'
+      error.key = 'Password is can include one alphanumeric, one lowercase, one uppercase, one special character. password must minimum 9 characters!'
     }
 
     return error;

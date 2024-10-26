@@ -4,8 +4,7 @@ const User = require('../../models/User');
 
 // register
 const registerUser = async(req, res) => {    
-    try{
-        console.log('hai')
+    try{        
         const {username, email, password } = req.body;
         const hashpassword =await bcrypt.hash(password, 10);
         
@@ -26,12 +25,16 @@ const registerUser = async(req, res) => {
 
 
 // Login
-const login = async (req, res) => {    
+const loginUser = async (req, res) => {    
     try{
         const {email, password } = req.body;
         const getuser = await User.findOne({email: email});
+        console.log(getuser)
         if(getuser) {
+            // Password  -> skvelmurugan19@gmail.com
+            const hashedPassword = getuser.password;
             const isMatch = await bcrypt.compare(password, hashedPassword);
+            console.log(isMatch)
             isMatch ? res.status(200).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
         } else {
             res.status(200).json({status:false,message:"User doesn't exit!"})
@@ -44,4 +47,4 @@ const login = async (req, res) => {
 }
 
 
-module.exports = {registerUser};
+module.exports = {registerUser, loginUser};
