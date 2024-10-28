@@ -6,8 +6,12 @@ const User = require('../../models/User');
 const registerUser = async(req, res) => {    
     try{        
         const {username, email, password } = req.body;
-        const hashpassword =await bcrypt.hash(password, 10);
-        
+        const getuser = await User.findOne({email: email});
+        if(getuser) {
+            res.status(200).json({status:false,message:'User already exist with same email!'});    
+        }
+
+        const hashpassword =await bcrypt.hash(password, 10);        
         const newUser = new User({
             username,
             password:hashpassword,
@@ -28,13 +32,11 @@ const registerUser = async(req, res) => {
 const loginUser = async (req, res) => {    
     try{
         const {email, password } = req.body;
-        const getuser = await User.findOne({email: email});
-        console.log(getuser)
+        const getuser = await User.findOne({email: email});        
         if(getuser) {
             // Password  -> skvelmurugan19@gmail.com
             const hashedPassword = getuser.password;
-            const isMatch = await bcrypt.compare(password, hashedPassword);
-            console.log(isMatch)
+            const isMatch = await bcrypt.compare(password, hashedPassword);            
             isMatch ? res.status(200).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
         } else {
             res.status(200).json({status:false,message:"User doesn't exit!"})
