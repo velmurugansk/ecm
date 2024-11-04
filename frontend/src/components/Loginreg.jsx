@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Commonform from './common/Commonform';
 import { registerFormcontrols, loginFormcontrols } from '@/config';
 import { useDispatch } from 'react-redux';
 import { registerUser, loginUser } from '../features/auth/authSlice'
 import { useToast } from '@/hooks/use-toast';
+import { useNavigate } from "react-router-dom";
 
 const userregisterData = {
   username: '', email: '', password: ''
@@ -22,7 +23,7 @@ function Loginreg() {
   const [error, setError] = useState({});
   const pwdregx = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/
   const dispatch = useDispatch()
-
+  const navigate = useNavigate();
   const setValues = (e) => {
     e.preventDefault()
     const { name, value } = e.target;
@@ -33,20 +34,20 @@ function Loginreg() {
     e.preventDefault();
     const errors = validateSignupdata(userdata);
     if (Object.keys(errors).length === 0) {
-      const response = dispatch(registerUser(userdata));
-      console.log(response, response.payload)
-      if(response.payload.status) {
-        toast({          
-          title: "Success",
-          description: response.payload.message,
-        })
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Alert",
-          description: response.payload.message,
-        })
-      }      
+      const response = dispatch(registerUser(userdata)).then((response) => {
+        if(response.payload.status) {          
+          toast({          
+            title: "Success",
+            description: response.payload.message,
+          })
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Alert",
+            description: response.payload.message,
+          })
+        }
+      })                  
     } else {
       toast({
         variant: "destructive",
@@ -83,19 +84,21 @@ function Loginreg() {
     const errors = validateLogindetail(logindata);
 
     if (Object.keys(errors).length === 0) {
-      const response = dispatch(loginUser(logindata));
-      if (response.payload.status) {
-        toast({
-          title: "Success",
-          description: response.payload.message,
-        })
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Alert",
-          description: response.payload.message,
-        })
-      }
+      dispatch(loginUser(logindata)).then((response) => {
+        if (response.payload.status) {
+          navigate("/")
+          toast({
+            title: "Success",
+            description: response.payload.message,
+          })
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Alert",
+            description: response.payload.message,
+          })
+        }
+      })      
     } else {
       toast({
         variant: "destructive",

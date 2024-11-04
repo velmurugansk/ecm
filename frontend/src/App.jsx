@@ -1,5 +1,6 @@
 import './App.css'
 import {BrowserRouter as Router,Routes, Route} from "react-router-dom"
+import { useSelector } from 'react-redux';
 import Loginreg from './components/Loginreg';
 import Header from './components/Header';
 import Homepage from './components/Homepage';
@@ -19,10 +20,7 @@ import Index from './components/pages/unauth/Index';
 
 function App() {
 
-  const isAuthenticated =true;
-  const user = {name: 'skvelmurugan',
-    role: 'user'
-  };
+  const {isAuthenticated, user} = useSelector((state) => state.auth);
 
   return (
     <Router>
