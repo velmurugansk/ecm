@@ -1,7 +1,7 @@
-// import { createAsyncThunk, createSlice } from "@reduxjs/toolkit/dist";
-import * as toolkitRaw from '@reduxjs/toolkit';
-const { createSlice } = toolkitRaw.default ?? toolkitRaw;
-const {createAsyncThunk} = toolkitRaw.default ?? toolkitRaw;
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+// import * as toolkitRaw from '@reduxjs/toolkit';
+// const { createSlice } = toolkitRaw.default ?? toolkitRaw;
+// const {createAsyncThunk} = toolkitRaw.default ?? toolkitRaw;
 import axios from 'axios';
 
 const initialvalue = {
@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk ('/auth/register',
         const response = await axios.post('http://localhost:5000/api/auth/register', formdata,{
             withCredentials:true,
         });
-        return response.data
+        return await response.data.json()
     }
 )
 
