@@ -1,6 +1,6 @@
 import './App.css'
 import {BrowserRouter as Router,Routes, Route} from "react-router-dom"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loginreg from './components/Loginreg';
 import Header from './components/Header';
 import Homepage from './components/Homepage';
@@ -16,11 +16,19 @@ import Checkout from './components/pages/shoppingview/Checkout';
 import Shoppingaccount from './components/pages/shoppingview/Shoppingaccount';
 import Authcheck from './components/common/Authcheck';
 import Index from './components/pages/unauth/Index';
+import { useEffect } from 'react';
+import { checkAuth } from './features/auth/authSlice';
 
 
 function App() {
 
   const {isAuthenticated, user} = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(checkAuth())
+  }, [dispatch])
+  
 
   return (
     <Router>

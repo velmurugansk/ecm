@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const token = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const User = require('../../models/User');
 
 // register
@@ -36,8 +36,14 @@ const loginUser = async (req, res) => {
         if(getuser) {
             // Password  -> skvelmurugan19@gmail.com
             const hashedPassword = getuser.password;
-            const isMatch = await bcrypt.compare(password, hashedPassword);            
-            isMatch ? res.status(200).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
+            const isMatch = await bcrypt.compare(password, hashedPassword);    
+            const user = {
+                email : getuser.email,
+                role : getuser.role,
+                id: getuser._id
+            }    
+            const token = jwt.sign({email : getuser.email, role : getuser.role}, 'SECRET_KEY', { expiresIn: "60m" })                        
+            isMatch ? res.status(200).cookie("token", token, {httpOnly: true, secure: false}).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
         } else {
             res.status(200).json({status:false,message:"User doesn't exit!"})
         }
@@ -48,5 +54,22 @@ const loginUser = async (req, res) => {
     }
 }
 
+const logoutUser = async (req, res) => {
+    res.clearCookie('token').json({status:true, message:"Logged out successfully!"});
+}
 
-module.exports = {registerUser, loginUser};
+const authMidleware = async (req, res, next) => {    
+    const token = req.cookies.token;
+    if(!token) {
+        return res.status(401).json({status:false, message: 'Unauthorised user!'});
+    }
+    try {
+        const decoded = jwt.verify(token, 'SECRET_KEY');
+        req.user = decoded;
+        next()
+    } catch (e) {
+        res.status(401).json({status:false,message:'Unauthorised user!'});
+    }
+}
+
+module.exports = {registerUser, loginUser, logoutUser, authMidleware};

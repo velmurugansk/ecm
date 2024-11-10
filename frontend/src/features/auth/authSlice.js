@@ -29,6 +29,17 @@ export const loginUser = createAsyncThunk ('/auth/login',
     }
 )
 
+export const checkAuth = createAsyncThunk ('/auth/checkAuth',
+    async () => {        
+        const response = await axios.get('http://localhost:5000/api/auth/check-auth', {
+            withCredentials:true,
+            headers : {'Cache-Control' : 'no-store, no-cache, must-revalidate, pre-revalidate' }
+        });
+        
+        return response.data
+    }
+)
+
 const authSlice = createSlice({
     name : "auth",
     initialState: initialvalue,
@@ -49,7 +60,7 @@ const authSlice = createSlice({
             state.isAuthenticated = false;
             state.user = null
         })
-        builder.addCase(loginUser.pending, (state) => {
+        .addCase(loginUser.pending, (state) => {
             state.isLoading = true;
         })
         .addCase(loginUser.fulfilled, (state, action) => {
@@ -58,6 +69,19 @@ const authSlice = createSlice({
             state.user = action.payload
         })
         .addCase(loginUser.rejected, (state) => {
+            state.isLoading = false;
+            state.isAuthenticated = false;
+            state.user = null
+        })
+        .addCase(checkAuth.pending, (state) => {
+            state.isLoading = true;
+        })
+        .addCase(checkAuth.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.isAuthenticated = true;
+            state.user = action.payload
+        })
+        .addCase(checkAuth.rejected, (state) => {
             state.isLoading = false;
             state.isAuthenticated = false;
             state.user = null
