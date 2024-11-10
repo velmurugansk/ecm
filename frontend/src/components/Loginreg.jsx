@@ -83,7 +83,7 @@ function Loginreg() {
     e.preventDefault();
     const errors = validateLogindetail(logindata);
 
-    // if (Object.keys(errors).length === 0) {
+    if (Object.keys(errors).length === 0) {
       dispatch(loginUser(logindata)).then((response) => {
         if (response.payload.status) {
           navigate("/")
@@ -99,13 +99,13 @@ function Loginreg() {
           })
         }
       })      
-    // } else {
-    //   toast({
-    //     variant: "destructive",
-    //     title: "Alert",
-    //     description: errors.key,
-    //   })
-    // }
+    } else {
+      toast({
+        variant: "destructive",
+        title: "Alert",
+        description: errors.key,
+      })
+    }
 
   }
 
