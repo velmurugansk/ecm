@@ -7,8 +7,7 @@ import { Button } from './ui/button';
 import { useSelector } from 'react-redux';
 
 function Header() {
-  const {isAuthenticated, user} = useSelector((state) => state.auth);
-
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const handleLogout = (e) => {
     e.preventDefault();
   }
@@ -25,7 +24,7 @@ function Header() {
       <div className="user-div">
         <div className="flex items-center">
           <MdOutlineShoppingCart className='text-2xl d-block cursor-pointer text-[#2257bf]' />
-          {isAuthenticated ? <Button className='ml-2 bg-[#2257bf] py-2 px-3 text-white rounded-lg hover:bg-[#3867C5]'><MdOutlineLogout className='mr-2' />Logout</Button> 
+          {isAuthenticated === true ? <Button className='ml-2 bg-[#2257bf] py-2 px-3 text-white rounded-lg hover:bg-[#3867C5]'><MdOutlineLogout className='mr-2' />Logout</Button> 
           : <Link to="/login"><Button className='ml-2 bg-[#2257bf] py-2 px-3 text-white rounded-lg hidden md:block hover:bg-[#3867C5]'>Login / Sign up</Button></Link>}          
         </div>
       </div>

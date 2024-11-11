@@ -22,14 +22,15 @@ import { checkAuth } from './features/auth/authSlice';
 
 function App() {
 
-  const {isAuthenticated, user} = useSelector((state) => state.auth);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(checkAuth())
   }, [dispatch])
   
-
+console.log(isAuthenticated, user)
   return (
     <Router>
       <Header/>

@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
                 id: getuser._id
             }    
             const token = jwt.sign({email : getuser.email, role : getuser.role}, 'SECRET_KEY', { expiresIn: "60m" })                        
-            isMatch ? res.status(200).cookie("token", token, {httpOnly: true, secure: false}).json({status:true,message:'Login Successful'}) : res.status(200).json({status:false,message:"Password doesn't match!"});
+            isMatch ? res.status(200).cookie("token", token, {httpOnly: true, secure: false}).json({status:true,message:'Login Successful',user}) : res.status(200).json({status:false,message:"Password doesn't match!"});
         } else {
             res.status(200).json({status:false,message:"User doesn't exit!"})
         }
